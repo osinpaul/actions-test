@@ -1,0 +1,30 @@
+name: build_nodejs
+
+on:
+  push:
+    branches:
+      - main #ветка
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' #версия ноды
+
+      - name: install_dependencies
+        run: npm install #установка пакетов
+      
+      - name: build
+        run: npm run build #команда сборки
+      
+      - name: save artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: dist
